@@ -40,6 +40,7 @@ The Programming Challenges API allows you to perform operations related to progr
             "c++": "#include <vector> ... "
         }
     },
+    ...
 ]
 ```
 
@@ -69,34 +70,92 @@ Example Response:
     }
 }
 ```
-### Getting Started
-To get started with the Programming Challenges API, follow these steps:
-1. Clone the Repository
- ```bash
- git clone https://github.com/your-username/programming-challenges-api.git
- cd programming-challenges-api
- ```
+### 3. Route to Get Limited and Difficulty-Based Programming Challenges (Randomized)
+- **Endpoint**: `/api/ziza/programming-challenges/get/limited-difficulties/:limit/:difficulties`
+- **Method**: `Get`
+- **Description**: Retrieves a random selection of programming challenges based on specified difficulty levels and limits the number of challenges returned.
+- **Parameters**:
+    - limit (path parameter): The maximum number of challenges to return.
+    - difficulties (path parameter): A comma-separated list of difficulty levels (e.g., Beginner,Intermediate).
+- **Response**: A JSON array of programming challenges filtered by the provided difficulty levels, randomized, and limited by the specified number.
+- **Error Responses**:
+    - `400 Bad Request`: If the limit is not a positive integer or if any difficulty levels are invalid.
+    - `500 Internal Server Error`: For any unexpected errors during processing.
+  
+Example Request:
+```bash
+GET /api/ziza/programming-challenges/get/limited-difficulties/5/Beginner,Intermediate
+```
+Example Response:
+```json
+[
+    {
+        "id": "101",
+        "Challenge": "Two Sum",
+        "description": "Find two numbers that add up to a specific target.",
+        "difficulty": "Beginner",
+        "testCases": [...],
+        "solution": {...}
+    },
+    ...
+]
+```
+### 4. Route to Get All Challenges Based on Difficulties
+- **Endpoint**: `/api/ziza/programming-challenges/get/difficulty/:difficulties`
+- **Method**: `GET`
+- **Description**: Retrieves all programming challenges that match the specified difficulty levels.
+- **Parameters**:
+    - difficulties (path parameter): A comma-separated list of difficulty levels (e.g., Beginner,Expert).
+- **Response**: A JSON array of programming challenges filtered by the provided difficulty levels.
+- **Error Responses**:
+    - `400 Bad Request`: If any difficulty levels are invalid.
+    - `500 Internal Server Error`: For any unexpected errors during processing.
+      
+Example Request:
+```bash
+GET /api/ziza/programming-challenges/get/difficulty/Beginner,Expert
+```
+Example Response:
+```json
+[
+    {
+        "id": "202",
+        "Challenge": "Longest Substring Without Repeating Characters",
+        "description": "Find the length of the longest substring without repeating characters.",
+        "difficulty": "Expert",
+        "testCases": [...],
+        "solution": {...}
+    },
+    ...
+]
+```
+### 5. Route to Get a Single Random Programming Challenge
+- **Endpoint**: `/api/ziza/programming-challenges/get/single/random`
+- **Method**: `GET`
+- **Description**: Retrieves a single random programming challenge from the database.
+- **Response**: A JSON object representing a single random programming challenge.
+- **Error Responses**:
+    - `404 Not Found`: If no challenges are available in the database.
+    - `500 Internal Server Error`: For any unexpected errors during processing.
+Example Request:
+```bash
+GET /api/ziza/programming-challenges/get/single/random
+```
+Example Response:
+```json
+{
+    "id": "303",
+    "Challenge": "Median of Two Sorted Arrays",
+    "description": "Find the median of two sorted arrays.",
+    "difficulty": "Intermediate",
+    "testCases": [...],
+    "solution": {...}
+}
+```
+<hr>
 
-2. Install Dependencies
-   <br>
-  Install the required Node.js packages:
-  ```bash
-  npm install
-   ```
-3. Set Up Environment Variables
-   <br>
-Create a .env file in the root directory and add the following configuration:
-  ```bash
-  npm install
-   ```
-4. Start the Server
-   <br>
-Run the server with:
-  ```bash
-  npm install
-   ```
 ### Contributing
-Contributions to the Programming Challenges API are welcome! If you have suggestions for improvements or new features, feel free to submit a pull request or open an issue.
+Contributions to the Programming Challenges API are welcome! If you have suggestions for improvements or new features, please DM me directly. I look forward to collaborating with you!
 
 ### License
 This project is licensed under the MIT License.
