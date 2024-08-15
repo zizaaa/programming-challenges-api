@@ -16,6 +16,36 @@ const invalidDifficulties = (difficulties) =>{
     return invalidDifficulties;
 }
 
+// Health check middleware
+const healthCheck = async (req, res, next) => {
+    const health = {
+        status: 'UP',
+        message: 'API is running successfully',
+        details: {}
+    };
+
+    try {
+        // Check database connection
+        const dbCheck = await programmingChallengesSchema.findOne().select('_id').lean();
+        health.details.database = dbCheck ? 'connected' : 'connected but no data';
+
+        req.health = health;
+        next();
+    } catch (error) {
+        console.error('Health check error:', error);
+        health.status = 'DOWN';
+        health.message = 'One or more components are not functioning correctly';
+        health.details.error = error.message;
+        req.health = health;
+        next();
+    }
+};
+
+// Health check route using middleware
+app.get('/api/ziza/health/check', healthCheck, (req, res) => {
+    res.status(req.health.status === 'UP' ? 200 : 500).json(req.health);
+});
+
 // Route to get limited and difficulty-based programming challenges, randomized
 app.get('/api/ziza/programming-challenges/get/limited-difficulties/:limit/:difficulties', async (req, res) => {
     try {
