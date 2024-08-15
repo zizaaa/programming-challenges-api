@@ -15,7 +15,7 @@ The Programming Challenges API allows you to perform operations related to progr
 
 ### 1. Get All Challenges
 
-- **Endpoint**: `/api/challenges`
+- **Endpoint**: `/api/ziza/programming-challenges`
 - **Method**: `GET`
 - **Description**: Retrieves a list of all programming challenges.
 - **Response**: A JSON array containing all challenges with their respective details.
@@ -44,8 +44,8 @@ The Programming Challenges API allows you to perform operations related to progr
 ```
 
 ### 2. Get Challenge by ID
-- **Endpoint**: /api/challenge/:id
-- **Method**: GET
+- **Endpoint**: `/api/ziza/programming-challenges/single/:id`
+- **Method**: `GET`
 - **Description**: Retrieves the details of a specific challenge by its unique ID.
 - **Parameters**:
     - **id (path parameter)**: The unique identifier of the challenge.
