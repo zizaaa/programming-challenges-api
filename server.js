@@ -101,7 +101,7 @@ app.get('/api/ziza/programming-challenges/get/single/random', async (req, res) =
 });
 
 // Route to get all programming challenges
-app.get('/api/ziza/programming-challenges', async (req, res) => {
+app.get('/api/ziza/programming-challenges/get/all', async (req, res) => {
     try {
         const challenges = await programmingChallengesSchema.find();
         return res.status(201).json(challenges);
@@ -130,12 +130,23 @@ app.get('/api/ziza/programming-challenges/get/single/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGODB_CONNECT_URI)
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log('Server running...');
+// Define a function to connect to MongoDB
+const connectToDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_CONNECT_URI, {
+            maxPoolSize: 10 // Adjust based on your needs
         });
-    })
-    .catch((err) => {
-        console.error('Database connection error:', err);
-    });
+        console.log('Database connected successfully');
+    } catch (error) {
+        console.error('Database connection error:', error);
+        process.exit(1); // Exit the process if unable to connect
+    }
+};
+
+// Call the function to connect to MongoDB
+connectToDatabase();
+
+// Start the server after successful database connection
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
